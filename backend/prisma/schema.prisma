@@ -1,0 +1,137 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Biography {
+  id           Int       @id @default(autoincrement())
+  fullName     String    @map("full_name")
+  title        String
+  subtitle     String?
+  aboutText    String    @map("about_text") @db.Text
+  profileImage String?   @map("profile_image")
+  phone        String?
+  email        String?
+  address      String?
+  birthday     DateTime?
+  nationality  String?
+  languages    String?
+  freelance    String?   @default("Available")
+  cvUrl        String?   @map("cv_url")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("biography")
+}
+
+model Skill {
+  id         Int      @id @default(autoincrement())
+  name       String
+  percentage Int
+  category   String
+  sortOrder  Int      @default(0) @map("sort_order")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("skills")
+}
+
+model Education {
+  id          Int       @id @default(autoincrement())
+  school      String
+  degree      String
+  field       String?
+  startDate   DateTime  @map("start_date")
+  endDate     DateTime? @map("end_date")
+  description String?   @db.Text
+  sortOrder   Int       @default(0) @map("sort_order")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("education")
+}
+
+model Experience {
+  id           Int       @id @default(autoincrement())
+  company      String
+  role         String
+  startDate    DateTime  @map("start_date")
+  endDate      DateTime? @map("end_date")
+  description  String?   @db.Text
+  technologies String?
+  sortOrder    Int       @default(0) @map("sort_order")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("experiences")
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String
+  icon        String
+  description String   @db.Text
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("contacts")
+}
+
+model Visitor {
+  id          Int      @id @default(autoincrement())
+  ip          String
+  region      String?
+  city        String?
+  country     String?
+  countryCode String?  @map("country_code")
+  referrer    String?
+  userAgent   String?  @map("user_agent")
+  pageVisited String?  @map("page_visited")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([ip])
+  @@map("visitors")
+}
+
+model SocialLink {
+  id        Int      @id @default(autoincrement())
+  platform  String
+  url       String
+  icon      String
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("social_links")
+}
