@@ -8,6 +8,7 @@ import servicesRoutes, { adminServicesRouter } from './services.routes';
 import contactsRoutes, { adminContactsRouter } from './contacts.routes';
 import visitorsRoutes, { adminVisitorsRouter, adminAnalyticsRouter } from './visitors.routes';
 import socialLinksRoutes, { adminSocialLinksRouter } from './socialLinks.routes';
+import seedRoutes from './seed.routes';
 
 const router = Router();
 
@@ -26,6 +27,7 @@ router.use('/services', servicesRoutes);
 router.use('/contacts', contactsRoutes);
 router.use('/track', visitorsRoutes);
 router.use('/social-links', socialLinksRoutes);
+router.use('/seed', seedRoutes);
 
 // Admin routes
 router.use('/admin/biography', adminBiographyRouter);
