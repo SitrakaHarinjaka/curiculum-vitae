@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import { SITE_CONFIG } from '@/lib/constants';
 import { TrackingScript } from '@/components/sections/TrackingScript';
@@ -10,6 +10,10 @@ const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
 });
+
+export const viewport: Viewport = {
+  themeColor: '#052050',
+};
 
 export const metadata: Metadata = {
   title: {

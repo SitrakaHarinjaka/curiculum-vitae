@@ -80,6 +80,7 @@ export interface Visitor {
   referrer: string | null;
   userAgent: string | null;
   pageVisited: string | null;
+  timeSpent: number | null;
   createdAt: string;
 }
 

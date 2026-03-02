@@ -5,7 +5,18 @@ import { DataTable } from '../components/ui/DataTable';
 import { Pagination } from '../components/ui/Pagination';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Clock } from 'lucide-react';
+
+function formatTimeSpent(seconds: number | null): string {
+  if (!seconds) return '-';
+  if (seconds < 60) return `${seconds}s`;
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  if (min < 60) return `${min}m ${sec}s`;
+  const hrs = Math.floor(min / 60);
+  const remainMin = min % 60;
+  return `${hrs}h ${remainMin}m`;
+}
 
 export function Visitors() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
@@ -43,6 +54,16 @@ export function Visitors() {
       </span>
     )},
     { key: 'pageVisited', header: 'Page', render: (v: Visitor) => v.pageVisited || '/' },
+    {
+      key: 'timeSpent',
+      header: 'Temps passé',
+      render: (v: Visitor) => (
+        <span className="flex items-center gap-1">
+          <Clock size={12} className="opacity-50" />
+          {formatTimeSpent(v.timeSpent)}
+        </span>
+      ),
+    },
     {
       key: 'createdAt',
       header: 'Date & Heure',

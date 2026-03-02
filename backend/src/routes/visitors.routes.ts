@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { trackVisitor, getVisitors, deleteVisitor, getAnalyticsVisits, getAnalyticsReferrers, getAnalyticsSummary } from '../controllers/visitors.controller';
+import { trackVisitor, updateTimeSpent, getVisitors, deleteVisitor, getAnalyticsVisits, getAnalyticsReferrers, getAnalyticsSummary } from '../controllers/visitors.controller';
 import { authMiddleware } from '../middleware/auth';
 
 const router = Router();
@@ -24,6 +24,7 @@ const router = Router();
  *         description: Visit tracked
  */
 router.post('/', trackVisitor);
+router.post('/time', updateTimeSpent);
 
 export const adminVisitorsRouter = Router();
 adminVisitorsRouter.use(authMiddleware);

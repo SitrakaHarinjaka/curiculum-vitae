@@ -8,28 +8,44 @@ export async function trackVisitor(req: Request, res: Response) {
   const ip = extractIp(req);
   const { referrer, page, userAgent } = req.body;
 
-  // Fire-and-forget
-  (async () => {
-    try {
-      const geo = await getGeolocation(ip);
-      await prisma.visitor.create({
-        data: {
-          ip,
-          region: geo?.regionName || null,
-          city: geo?.city || null,
-          country: geo?.country || null,
-          countryCode: geo?.countryCode || null,
-          referrer: referrer || null,
-          userAgent: userAgent || req.headers['user-agent'] || null,
-          pageVisited: page || '/',
-        },
-      });
-    } catch (err) {
-      logger.error('Track visitor error:', err);
-    }
-  })();
+  try {
+    const geo = await getGeolocation(ip);
+    const visitor = await prisma.visitor.create({
+      data: {
+        ip,
+        region: geo?.regionName || null,
+        city: geo?.city || null,
+        country: geo?.country || null,
+        countryCode: geo?.countryCode || null,
+        referrer: referrer || null,
+        userAgent: userAgent || req.headers['user-agent'] || null,
+        pageVisited: page || '/',
+      },
+    });
+    return res.status(201).json({ success: true, visitorId: visitor.id });
+  } catch (err) {
+    logger.error('Track visitor error:', err);
+    return res.status(201).json({ success: true });
+  }
+}
 
-  return res.status(201).json({ success: true });
+export async function updateTimeSpent(req: Request, res: Response) {
+  const { visitorId, timeSpent } = req.body;
+
+  if (!visitorId || typeof timeSpent !== 'number') {
+    return res.status(400).json({ success: false, message: 'visitorId and timeSpent required' });
+  }
+
+  try {
+    await prisma.visitor.update({
+      where: { id: Number(visitorId) },
+      data: { timeSpent: Math.round(timeSpent) },
+    });
+  } catch (err) {
+    logger.error('Update time spent error:', err);
+  }
+
+  return res.json({ success: true });
 }
 
 export async function getVisitors(req: Request, res: Response) {
