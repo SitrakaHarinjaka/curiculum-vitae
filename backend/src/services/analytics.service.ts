@@ -12,7 +12,7 @@ export async function getVisitsOverTime(days: number = 30) {
     ORDER BY date ASC
   `;
 
-  return visits.map(v => ({
+  return visits.map((v: { date: string; count: bigint }) => ({
     date: v.date,
     count: Number(v.count),
   }));
@@ -31,7 +31,7 @@ export async function getTopReferrers(limit: number = 10) {
     LIMIT ${limit}
   `;
 
-  return referrers.map(r => ({
+  return referrers.map((r: { referrer: string; count: bigint }) => ({
     referrer: r.referrer,
     count: Number(r.count),
   }));
@@ -40,7 +40,7 @@ export async function getTopReferrers(limit: number = 10) {
 export async function getSummaryStats() {
   const [totalVisits, uniqueVisitors, totalMessages, unreadMessages] = await Promise.all([
     prisma.visitor.count(),
-    prisma.visitor.groupBy({ by: ['ip'], _count: true }).then(r => r.length),
+    prisma.visitor.groupBy({ by: ['ip'], _count: true }).then((r: unknown[]) => r.length),
     prisma.contact.count(),
     prisma.contact.count({ where: { isRead: false } }),
   ]);
