@@ -1,8 +1,14 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
+import { getTranslationsForMany, mergeTranslationsList } from '../services/translation.service';
 
-export async function getServices(_req: Request, res: Response) {
+export async function getServices(req: Request, res: Response) {
   const services = await prisma.service.findMany({ orderBy: { sortOrder: 'asc' } });
+  const lang = req.query.lang as string;
+  if (lang && lang !== 'fr' && services.length > 0) {
+    const trans = await getTranslationsForMany('service', services.map((s: { id: number }) => s.id), lang);
+    return res.json({ success: true, data: mergeTranslationsList(services, trans) });
+  }
   return res.json({ success: true, data: services });
 }
 

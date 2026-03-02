@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Biography, Skill, Education, Experience } from '@/lib/types';
 import { useInView } from '@/hooks/useInView';
+import { useLocale } from '@/context/LocaleContext';
 
 interface ParcoursSectionProps {
   biography: Biography | null;
@@ -11,23 +12,24 @@ interface ParcoursSectionProps {
   experiences: Experience[];
 }
 
-const tabs = [
-  { id: 'biography', label: 'BIOGRAPHIE', number: '01' },
-  { id: 'skills', label: 'SKILLS', number: '02' },
-  { id: 'education', label: 'EDUCATION', number: '03' },
-  { id: 'experiences', label: 'EXPERIENCES', number: '04' },
-];
-
 export function ParcoursSection({ biography, skills, education, experiences }: ParcoursSectionProps) {
   const [activeTab, setActiveTab] = useState('biography');
   const { ref, isInView } = useInView(0.1);
+  const { t } = useLocale();
+
+  const tabs = [
+    { id: 'biography', label: t.parcours.biography, number: '01' },
+    { id: 'skills', label: t.parcours.skills, number: '02' },
+    { id: 'education', label: t.parcours.education, number: '03' },
+    { id: 'experiences', label: t.parcours.experiences, number: '04' },
+  ];
 
   return (
     <section id="resume" className="py-20 bg-[linear-gradient(135deg,#052050_60%,#240839_100%)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Mes <span className="text-accent">parcours</span>
+            {t.parcours.title} <span className="text-accent">{t.parcours.titleAccent}</span>
           </h2>
           <div className="w-16 h-1 bg-accent mx-auto rounded-full" />
         </div>
@@ -59,25 +61,25 @@ export function ParcoursSection({ biography, skills, education, experiences }: P
 
         {/* Tab content */}
         <div ref={ref} className={`transition-all duration-500 ${isInView ? 'animate-fade-in-up' : 'opacity-0'}`}>
-          {activeTab === 'biography' && <BiographyTab biography={biography} />}
+          {activeTab === 'biography' && <BiographyTab biography={biography} bio={t.bio} />}
           {activeTab === 'skills' && <SkillsTab skills={skills} />}
-          {activeTab === 'education' && <EducationTab education={education} />}
-          {activeTab === 'experiences' && <ExperiencesTab experiences={experiences} />}
+          {activeTab === 'education' && <EducationTab education={education} months={t.months} today={t.today} />}
+          {activeTab === 'experiences' && <ExperiencesTab experiences={experiences} months={t.months} today={t.today} />}
         </div>
       </div>
     </section>
   );
 }
 
-function BiographyTab({ biography }: { biography: Biography | null }) {
+function BiographyTab({ biography, bio }: { biography: Biography | null; bio: { name: string; email: string; phone: string; address: string; nationality: string; languages: string; freelance: string } }) {
   const info = [
-    { label: 'Nom', value: biography?.fullName },
-    { label: 'Email', value: biography?.email },
-    { label: 'Téléphone', value: biography?.phone },
-    { label: 'Adresse', value: biography?.address },
-    { label: 'Nationalité', value: biography?.nationality },
-    { label: 'Langues', value: biography?.languages },
-    { label: 'Freelance', value: biography?.freelance },
+    { label: bio.name, value: biography?.fullName },
+    { label: bio.email, value: biography?.email },
+    { label: bio.phone, value: biography?.phone },
+    { label: bio.address, value: biography?.address },
+    { label: bio.nationality, value: biography?.nationality },
+    { label: bio.languages, value: biography?.languages },
+    { label: bio.freelance, value: biography?.freelance },
   ];
 
   return (
@@ -127,7 +129,7 @@ function SkillsTab({ skills }: { skills: Skill[] }) {
   );
 }
 
-function EducationTab({ education }: { education: Education[] }) {
+function EducationTab({ education, months, today }: { education: Education[]; months: readonly string[]; today: string }) {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {education.map(edu => (
@@ -140,7 +142,7 @@ function EducationTab({ education }: { education: Education[] }) {
             <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
               <h4 className="text-lg font-semibold text-text-primary">{edu.degree}</h4>
               <span className="text-xs text-accent bg-accent/10 px-3 py-1 rounded-full">
-                {formatDate(edu.startDate)} - {edu.endDate ? formatDate(edu.endDate) : "Aujourd'hui"}
+                {formatDate(edu.startDate, months)} - {edu.endDate ? formatDate(edu.endDate, months) : today}
               </span>
             </div>
             <p className="text-sm text-accent mb-2">{edu.school}{edu.field ? ` - ${edu.field}` : ''}</p>
@@ -154,7 +156,7 @@ function EducationTab({ education }: { education: Education[] }) {
   );
 }
 
-function ExperiencesTab({ experiences }: { experiences: Experience[] }) {
+function ExperiencesTab({ experiences, months, today }: { experiences: Experience[]; months: readonly string[]; today: string }) {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -164,7 +166,7 @@ function ExperiencesTab({ experiences }: { experiences: Experience[] }) {
             <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
               <h4 className="text-base font-bold text-text-primary">{exp.company}</h4>
               <span className="text-xs text-accent font-medium">
-                {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : "Aujourd'hui"}
+                {formatDate(exp.startDate, months)} - {exp.endDate ? formatDate(exp.endDate, months) : today}
               </span>
             </div>
             <p className="text-sm text-accent font-medium mb-3">{exp.role}</p>
@@ -184,8 +186,7 @@ function ExperiencesTab({ experiences }: { experiences: Experience[] }) {
   );
 }
 
-function formatDate(dateStr: string): string {
+function formatDate(dateStr: string, months: readonly string[]): string {
   const date = new Date(dateStr);
-  const months = ['Janv.', 'Fév.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'];
   return `${months[date.getMonth()]} ${date.getFullYear()}`;
 }

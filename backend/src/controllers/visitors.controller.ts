@@ -22,10 +22,11 @@ export async function trackVisitor(req: Request, res: Response) {
         pageVisited: page || '/',
       },
     });
-    return res.status(201).json({ success: true, visitorId: visitor.id });
+    const suggestedLocale = getLocaleFromCountry(geo?.countryCode);
+    return res.status(201).json({ success: true, visitorId: visitor.id, suggestedLocale });
   } catch (err) {
     logger.error('Track visitor error:', err);
-    return res.status(201).json({ success: true });
+    return res.status(201).json({ success: true, suggestedLocale: 'fr' });
   }
 }
 
@@ -89,6 +90,15 @@ export async function deleteVisitor(req: Request, res: Response) {
   const { id } = req.params;
   await prisma.visitor.delete({ where: { id: Number(id) } });
   return res.json({ success: true, message: 'Visiteur supprimé' });
+}
+
+const ENGLISH_SPEAKING_COUNTRIES = new Set([
+  'US', 'GB', 'AU', 'NZ', 'CA', 'IE', 'ZA', 'GH', 'KE', 'NG', 'PH', 'SG', 'JM', 'TT', 'BB',
+]);
+
+function getLocaleFromCountry(countryCode: string | null | undefined): 'fr' | 'en' {
+  if (!countryCode) return 'fr';
+  return ENGLISH_SPEAKING_COUNTRIES.has(countryCode.toUpperCase()) ? 'en' : 'fr';
 }
 
 function extractIp(req: Request): string {

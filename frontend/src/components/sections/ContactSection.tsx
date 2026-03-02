@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Biography, SocialLink } from '@/lib/types';
 import { postApi } from '@/lib/api';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Facebook, Linkedin, Globe, Dribbble } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
 
 const iconMap: Record<string, React.ElementType> = {
   facebook: Facebook,
@@ -22,6 +23,7 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const { t } = useLocale();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
       setTimeout(() => setStatus('idle'), 5000);
     } else {
       setStatus('error');
-      setErrorMsg(result.message || 'Erreur lors de l\'envoi');
+      setErrorMsg(result.message || t.contact.error);
       setTimeout(() => setStatus('idle'), 5000);
     }
   };
@@ -46,29 +48,29 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Contact info */}
           <div>
-            <h2 className="text-2xl font-bold mb-8">Contact Info</h2>
+            <h2 className="text-2xl font-bold mb-8">{t.contact.info}</h2>
             <div className="space-y-6">
               <ContactItem
                 icon={Mail}
-                title="MAIL US"
+                title={t.contact.mailUs}
                 value={biography?.email || 'info@bluebase3.com'}
                 href={`mailto:${biography?.email || 'info@bluebase3.com'}`}
               />
               <ContactItem
                 icon={Phone}
-                title="CONTACT US"
+                title={t.contact.contactUs}
                 value={biography?.phone || '+1 504-899-822-457'}
                 href={`tel:${biography?.phone || '+1504899822457'}`}
               />
               <ContactItem
                 icon={MapPin}
-                title="LOCATION"
+                title={t.contact.location}
                 value={biography?.address || '22 Baker Street Hangover, Stains W1U 3BW'}
               />
             </div>
 
             <div className="mt-10">
-              <h3 className="text-lg font-semibold mb-4">Social Info</h3>
+              <h3 className="text-lg font-semibold mb-4">{t.contact.social}</h3>
               <div className="flex gap-3">
                 {socialLinks?.slice(0, 4).map(platform => {
                   const Icon = iconMap[platform.icon] || Globe;
@@ -96,14 +98,14 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
           {/* Contact form */}
           <div>
             <h2 className="text-2xl font-bold mb-8">
-              Let&apos;s Work <span className="text-accent">Together.</span>
+              {t.contact.workTogether} <span className="text-accent">{t.contact.workTogetherAccent}</span>
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder={t.contact.yourName}
                   required
                   value={form.name}
                   onChange={e => setForm({ ...form, name: e.target.value })}
@@ -111,7 +113,7 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
                 />
                 <input
                   type="email"
-                  placeholder="Your Email"
+                  placeholder={t.contact.yourEmail}
                   required
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
@@ -120,14 +122,14 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
               </div>
               <input
                 type="text"
-                placeholder="Your Subject"
+                placeholder={t.contact.yourSubject}
                 required
                 value={form.subject}
                 onChange={e => setForm({ ...form, subject: e.target.value })}
                 className="w-full px-4 py-3 bg-bg-card border border-border rounded-lg text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:border-accent transition-colors"
               />
               <textarea
-                placeholder="Send Message"
+                placeholder={t.contact.sendMessage}
                 required
                 rows={5}
                 value={form.message}
@@ -141,17 +143,17 @@ export function ContactSection({ biography, socialLinks }: ContactSectionProps) 
                 className="w-full py-3 bg-accent text-bg-primary font-medium rounded-lg hover:bg-accent-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {status === 'loading' ? (
-                  'Envoi en cours...'
+                  t.contact.sending
                 ) : (
                   <>
-                    <Send size={16} /> Submit Now
+                    <Send size={16} /> {t.contact.submitNow}
                   </>
                 )}
               </button>
 
               {status === 'success' && (
                 <div className="flex items-center gap-2 text-green-400 text-sm">
-                  <CheckCircle size={16} /> Message envoyé avec succès !
+                  <CheckCircle size={16} /> {t.contact.success}
                 </div>
               )}
               {status === 'error' && (

@@ -1,6 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import { Biography, SocialLink } from '@/lib/types';
 import { Facebook, Linkedin, Globe, Dribbble, Download, ChevronRight } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
 
 const iconMap: Record<string, React.ElementType> = {
   facebook: Facebook,
@@ -16,6 +19,7 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ biography, socialLinks }: HeroSectionProps) {
+  const { t } = useLocale();
   const nameParts = (biography?.fullName || 'Sitraka Harinjaka').split(' ');
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(' ');
@@ -31,15 +35,15 @@ export function HeroSection({ biography, socialLinks }: HeroSectionProps) {
           {/* Text content */}
           <div className="order-2 lg:order-1">
             <p className="text-accent text-sm tracking-widest mb-4">
-              ✦ {biography?.subtitle || 'Bienvenue dans mon Curriculum Vitae'}
+              ✦ {biography?.subtitle || t.hero.welcome}
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
-              Hello, Je suis{' '}
+              {t.hero.hello}{' '}
               <span className="text-accent">{firstName}</span>{' '}
               {lastName}
             </h1>
             <h2 className="text-lg text-text-primary font-bold mb-6">
-              {biography?.title || 'Développeur Front-End'}
+              {biography?.title || t.hero.defaultTitle}
             </h2>
             <p className="text-text-primary text-sm leading-relaxed mb-8 max-w-lg">
               {biography?.aboutText}
@@ -52,7 +56,7 @@ export function HeroSection({ biography, socialLinks }: HeroSectionProps) {
                 href="#about"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-accent text-accent rounded-full hover:bg-accent hover:text-bg-primary transition-all duration-300"
               >
-                Plus d&apos;infos <ChevronRight size={16} />
+                {t.hero.moreInfo} <ChevronRight size={16} />
               </a>
               
                 <a

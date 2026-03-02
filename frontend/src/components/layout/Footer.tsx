@@ -1,5 +1,8 @@
+'use client';
+
 import { SocialLink } from '@/lib/types';
 import { Facebook, Linkedin, Globe, Dribbble } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
 
 const iconMap: Record<string, React.ElementType> = {
   facebook: Facebook,
@@ -14,6 +17,8 @@ interface FooterProps {
 }
 
 export function Footer({ socialLinks }: FooterProps) {
+  const { t } = useLocale();
+
   return (
     <footer className="bg-bg-secondary border-t border-border bg-[linear-gradient(135deg,#052050_60%,#240839_100%)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -25,13 +30,13 @@ export function Footer({ socialLinks }: FooterProps) {
             </div>
             <div>
               <p className="text-text-primary font-semibold">Sitraka Harinjaka</p>
-              <p className="text-sm text-text-secondary">Développeur Front-End</p>
+              <p className="text-sm text-text-secondary">{t.footer.role}</p>
             </div>
           </div>
 
           {/* Navigation */}
           <div className="flex items-center gap-6">
-            {['Home', 'Portfolio', 'Blog', 'Contact'].map(item => (
+            {t.footer.nav.map(item => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -64,7 +69,7 @@ export function Footer({ socialLinks }: FooterProps) {
 
         <div className="mt-8 pt-8 border-t border-border text-center">
           <p className="text-sm text-text-secondary">
-            &copy; {new Date().getFullYear()} Sitraka Harinjaka. Tous droits réservés.
+            &copy; {new Date().getFullYear()} Sitraka Harinjaka. {t.footer.rights}
           </p>
         </div>
       </div>

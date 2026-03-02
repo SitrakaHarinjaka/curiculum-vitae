@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-
-const navLinks = [
-  { href: '#home', label: 'HOME' },
-  { href: '#about', label: 'ABOUT' },
-  { href: '#resume', label: 'RESUME' },
-  { href: '#contact', label: 'CONTACT' },
-];
+import { useLocale } from '@/context/LocaleContext';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { locale, t, setLocale } = useLocale();
+
+  const navLinks = [
+    { href: '#home', label: t.nav.home },
+    { href: '#about', label: t.nav.about },
+    { href: '#resume', label: t.nav.resume },
+    { href: '#contact', label: t.nav.contact },
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/90 backdrop-blur-md border-b border-border">
@@ -32,6 +34,13 @@ export function Header() {
                 {link.label}
               </a>
             ))}
+            <button
+              onClick={() => setLocale(locale === 'fr' ? 'en' : 'fr')}
+              className="cursor-pointer flex items-center gap-1.5 text-xs font-bold tracking-wider text-text-white hover:text-accent transition-colors duration-300"
+            >
+              <span>{locale === 'fr' ? '🇬🇧' : '🇫🇷'}</span>
+              {locale === 'fr' ? 'EN' : 'FR'}
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -57,6 +66,13 @@ export function Header() {
                 {link.label}
               </a>
             ))}
+            <button
+              onClick={() => setLocale(locale === 'fr' ? 'en' : 'fr')}
+              className="flex items-center gap-1.5 py-3 text-sm font-bold tracking-wider text-text-secondary hover:text-accent transition-colors duration-300"
+            >
+              <span>{locale === 'fr' ? '🇬🇧' : '🇫🇷'}</span>
+              {locale === 'fr' ? 'EN' : 'FR'}
+            </button>
           </div>
         )}
       </nav>

@@ -3,6 +3,7 @@
 import { Service } from '@/lib/types';
 import { useInView } from '@/hooks/useInView';
 import { Code, Globe, Palette } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
 
 const iconMap: Record<string, React.ElementType> = {
   code: Code,
@@ -15,14 +16,23 @@ interface ServicesSectionProps {
 }
 
 export function ServicesSection({ services }: ServicesSectionProps) {
+  const { t } = useLocale();
   const { ref, isInView } = useInView(0.2);
+
+  const defaultServices: Service[] = t.services.defaults.map((s, i) => ({
+    id: i + 1,
+    title: s.title,
+    icon: ['code', 'wordpress', 'palette'][i],
+    description: s.description,
+    sortOrder: i + 1,
+  }));
 
   return (
     <section id="about" className="py-20 bg-[linear-gradient(135deg,#240839_5%,#082252_100%)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Mes <span className="text-accent">services</span>
+            {t.services.title} <span className="text-accent">{t.services.titleAccent}</span>
           </h2>
           <div className="w-16 h-1 bg-accent mx-auto rounded-full" />
         </div>
@@ -55,9 +65,3 @@ export function ServicesSection({ services }: ServicesSectionProps) {
     </section>
   );
 }
-
-const defaultServices: Service[] = [
-  { id: 1, title: 'Développement Front-End React / Next.js', icon: 'code', description: "Je conçois et développe des interfaces modernes, performantes et customisables en React et Next.js.", sortOrder: 1 },
-  { id: 2, title: 'Développement de Sites WordPress', icon: 'wordpress', description: "Je crée des sites WordPress professionnels, personnalisés et faciles à gérer.", sortOrder: 2 },
-  { id: 3, title: 'Web Design & Design UI/UX', icon: 'palette', description: "Je réalise des designs web élégants, intuitifs et centrés utilisateur.", sortOrder: 3 },
-];

@@ -1,8 +1,16 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
+import { getTranslationsMap, mergeTranslations } from '../services/translation.service';
 
-export async function getBiography(_req: Request, res: Response) {
+export async function getBiography(req: Request, res: Response) {
   const bio = await prisma.biography.findFirst();
+  if (!bio) return res.json({ success: true, data: null });
+
+  const lang = req.query.lang as string;
+  if (lang && lang !== 'fr') {
+    const trans = await getTranslationsMap('biography', bio.id, lang);
+    return res.json({ success: true, data: mergeTranslations(bio, trans) });
+  }
   return res.json({ success: true, data: bio });
 }
 

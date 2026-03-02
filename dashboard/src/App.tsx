@@ -13,6 +13,7 @@ import { Experiences } from './routes/Experiences';
 import { Services } from './routes/Services';
 import { SocialLinks } from './routes/SocialLinks';
 import { Settings } from './routes/Settings';
+import { Translations } from './routes/Translations';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/experiences" element={<Experiences />} />
             <Route path="/services" element={<Services />} />
             <Route path="/social-links" element={<SocialLinks />} />
+            <Route path="/translations" element={<Translations />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>

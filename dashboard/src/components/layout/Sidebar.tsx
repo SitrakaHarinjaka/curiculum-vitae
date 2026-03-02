@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, Users, Mail, User, Wrench,
-  GraduationCap, Briefcase, Settings, Link2, X, Globe
+  GraduationCap, Briefcase, Settings, Link2, X, Globe, Languages
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -15,6 +15,7 @@ const navItems = [
   { to: '/experiences', icon: Briefcase, label: 'Expériences' },
   { to: '/services', icon: Globe, label: 'Services' },
   { to: '/social-links', icon: Link2, label: 'Liens sociaux' },
+  { to: '/translations', icon: Languages, label: 'Traductions' },
   { to: '/settings', icon: Settings, label: 'Paramètres' },
 ];
 

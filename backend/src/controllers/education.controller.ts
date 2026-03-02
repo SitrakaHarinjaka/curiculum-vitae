@@ -1,8 +1,14 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
+import { getTranslationsForMany, mergeTranslationsList } from '../services/translation.service';
 
-export async function getEducation(_req: Request, res: Response) {
+export async function getEducation(req: Request, res: Response) {
   const education = await prisma.education.findMany({ orderBy: { sortOrder: 'asc' } });
+  const lang = req.query.lang as string;
+  if (lang && lang !== 'fr' && education.length > 0) {
+    const trans = await getTranslationsForMany('education', education.map((e: { id: number }) => e.id), lang);
+    return res.json({ success: true, data: mergeTranslationsList(education, trans) });
+  }
   return res.json({ success: true, data: education });
 }
 

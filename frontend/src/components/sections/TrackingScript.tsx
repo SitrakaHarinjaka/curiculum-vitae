@@ -23,6 +23,15 @@ export function TrackingScript() {
         if (data.visitorId) {
           visitorIdRef.current = data.visitorId;
         }
+        // Set locale cookie from IP detection if no locale preference exists
+        if (data.suggestedLocale && !document.cookie.includes('locale=')) {
+          document.cookie = `locale=${data.suggestedLocale};path=/;max-age=${365 * 24 * 60 * 60}`;
+          // Reload only if detected locale differs from current page lang
+          const currentLang = document.documentElement.lang;
+          if (data.suggestedLocale !== currentLang) {
+            window.location.reload();
+          }
+        }
       } catch {
         // Silent fail - tracking should not impact UX
       }

@@ -1,8 +1,13 @@
 import { API_BASE_URL } from './constants';
 
-export async function fetchApi<T>(endpoint: string): Promise<T | null> {
+export async function fetchApi<T>(endpoint: string, lang?: string): Promise<T | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}/api${endpoint}`, {
+    const separator = endpoint.includes('?') ? '&' : '?';
+    const url = lang && lang !== 'fr'
+      ? `${API_BASE_URL}/api${endpoint}${separator}lang=${lang}`
+      : `${API_BASE_URL}/api${endpoint}`;
+
+    const res = await fetch(url, {
       next: { revalidate: 300 },
     });
 

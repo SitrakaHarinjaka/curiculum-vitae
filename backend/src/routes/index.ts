@@ -8,6 +8,7 @@ import servicesRoutes, { adminServicesRouter } from './services.routes';
 import contactsRoutes, { adminContactsRouter } from './contacts.routes';
 import visitorsRoutes, { adminVisitorsRouter, adminAnalyticsRouter } from './visitors.routes';
 import socialLinksRoutes, { adminSocialLinksRouter } from './socialLinks.routes';
+import { adminTranslationsRouter } from './translations.routes';
 import seedRoutes from './seed.routes';
 
 const router = Router();
@@ -39,5 +40,6 @@ router.use('/admin/contacts', adminContactsRouter);
 router.use('/admin/visitors', adminVisitorsRouter);
 router.use('/admin/analytics', adminAnalyticsRouter);
 router.use('/admin/social-links', adminSocialLinksRouter);
+router.use('/admin/translations', adminTranslationsRouter);
 
 export default router;

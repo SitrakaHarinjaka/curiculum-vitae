@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Poppins } from 'next/font/google';
+import { cookies, headers } from 'next/headers';
 import { SITE_CONFIG } from '@/lib/constants';
+import { getDictionary, type Locale } from '@/lib/i18n';
+import { LocaleProvider } from '@/context/LocaleContext';
 import { TrackingScript } from '@/components/sections/TrackingScript';
 import './globals.css';
 
@@ -15,46 +18,65 @@ export const viewport: Viewport = {
   themeColor: '#052050',
 };
 
-export const metadata: Metadata = {
-  title: {
-    default: SITE_CONFIG.title,
-    template: `%s | ${SITE_CONFIG.name}`,
-  },
-  description: SITE_CONFIG.description,
-  keywords: ['développeur front-end', 'React', 'Next.js', 'Vue.js', 'portfolio', 'Sitraka Harinjaka', 'développeur web', 'freelance'],
-  authors: [{ name: SITE_CONFIG.name }],
-  openGraph: {
-    type: 'website',
-    locale: SITE_CONFIG.locale,
-    siteName: SITE_CONFIG.name,
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = getDictionary(locale);
+
+  return {
+    title: {
+      default: t.meta.title,
+      template: `%s | ${SITE_CONFIG.name}`,
+    },
+    description: t.meta.description,
+    keywords: locale === 'fr'
+      ? ['développeur front-end', 'React', 'Next.js', 'Vue.js', 'portfolio', 'Sitraka Harinjaka', 'développeur web', 'freelance']
+      : ['front-end developer', 'React', 'Next.js', 'Vue.js', 'portfolio', 'Sitraka Harinjaka', 'web developer', 'freelance'],
+    authors: [{ name: SITE_CONFIG.name }],
+    openGraph: {
+      type: 'website',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      siteName: SITE_CONFIG.name,
+      title: t.meta.title,
+      description: t.meta.description,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.meta.title,
+      description: t.meta.description,
+    },
+    robots: {
       index: true,
       follow: true,
+      googleBot: { index: true, follow: true },
     },
-  },
-};
+  };
+}
 
-export default function RootLayout({
+async function getLocale(): Promise<Locale> {
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('locale')?.value;
+  if (localeCookie === 'en' || localeCookie === 'fr') return localeCookie;
+
+  const headerStore = await headers();
+  const acceptLang = headerStore.get('accept-language') || '';
+  if (acceptLang.startsWith('en')) return 'en';
+  return 'fr';
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+
   return (
-    <html lang="fr" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang={locale} className={`${inter.variable} ${poppins.variable}`}>
       <body className="font-[family-name:var(--font-poppins)] antialiased">
-        {children}
-        <TrackingScript />
+        <LocaleProvider initialLocale={locale}>
+          {children}
+          <TrackingScript />
+        </LocaleProvider>
       </body>
     </html>
   );

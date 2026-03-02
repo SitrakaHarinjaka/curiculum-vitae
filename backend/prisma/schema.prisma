@@ -127,6 +127,21 @@ model Visitor {
   @@map("visitors")
 }
 
+model Translation {
+  id        Int      @id @default(autoincrement())
+  entity    String
+  entityId  Int      @map("entity_id")
+  field     String
+  locale    String
+  value     String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([entity, entityId, field, locale])
+  @@index([entity, entityId, locale])
+  @@map("translations")
+}
+
 model SocialLink {
   id        Int      @id @default(autoincrement())
   platform  String

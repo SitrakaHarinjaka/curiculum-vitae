@@ -92,6 +92,20 @@ export interface SocialLink {
   sortOrder: number;
 }
 
+export interface TranslatableItem {
+  id: number;
+  label: string;
+  fields: Record<string, { fr: string; en: string }>;
+}
+
+export interface TranslatableData {
+  biography: TranslatableItem[];
+  skill: TranslatableItem[];
+  education: TranslatableItem[];
+  experience: TranslatableItem[];
+  service: TranslatableItem[];
+}
+
 export interface AnalyticsSummary {
   totalVisits: number;
   uniqueVisitors: number;
