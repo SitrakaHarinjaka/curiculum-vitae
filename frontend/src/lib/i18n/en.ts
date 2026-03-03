@@ -69,7 +69,7 @@ export const en: Dictionary = {
     back: 'Back to home',
   },
   meta: {
-    title: 'Sitraka Harinjaka - Front-End Developer',
-    description: 'Front-end developer with over eight years of experience, specialized in React, Vue and HTML/CSS integration. Professional portfolio.',
+    title: 'Sitraka Harinjaka - Full-stack Developer',
+    description: 'Full-Stack Developer | React, Vue, Node.js, NestJS | 8+ years building scalable, high-performance web apps.',
   },
 };

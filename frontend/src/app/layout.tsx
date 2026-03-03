@@ -29,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: t.meta.description,
     keywords: locale === 'fr'
-      ? ['développeur front-end', 'React', 'Next.js', 'Vue.js', 'portfolio', 'Sitraka Harinjaka', 'développeur web', 'freelance']
-      : ['front-end developer', 'React', 'Next.js', 'Vue.js', 'portfolio', 'Sitraka Harinjaka', 'web developer', 'freelance'],
+      ? ['développeur full stack js', 'React', 'Next.js', 'Vue.js', 'Sitraka Harinjaka', 'développeur web', 'freelance', 'nodejs', 'express', 'nestjs']
+      : ['full stack js developer', 'React', 'Next.js', 'Vue.js', 'Sitraka Harinjaka', 'web developer', 'freelance', 'nodejs', 'express', 'nestjs'],
     authors: [{ name: SITE_CONFIG.name }],
     openGraph: {
       type: 'website',

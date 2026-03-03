@@ -67,7 +67,7 @@ export const fr = {
     back: "Retour à l'accueil",
   },
   meta: {
-    title: 'Sitraka Harinjaka - Développeur Front-End',
-    description: "Développeur front-end avec plus de huit ans d'expérience, spécialisé en React, Vue et intégration HTML/CSS. Portfolio professionnel.",
+    title: 'Sitraka Harinjaka - Développeur Full stack',
+    description: "Développeur Full-Stack avec plus de 8 ans d’expérience, spécialisé en React, Vue, Node.js et NestJS. Je conçois des applications web performantes, évolutives et centrées sur la valeur métier.",
   },
 };
