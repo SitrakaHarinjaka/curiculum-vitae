@@ -5,7 +5,7 @@ import { DataTable } from '../components/ui/DataTable';
 import { Pagination } from '../components/ui/Pagination';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { Trash2, Clock, Check } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
 export function Visitors() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
