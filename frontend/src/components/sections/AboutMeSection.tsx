@@ -18,8 +18,8 @@ export function AboutMeSection({ about }: { about: string }) {
           <div className="w-16 h-1 bg-accent mx-auto rounded-full" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 items-center">
+        <div className="relative ">
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 items-center text-left lg:text-justify">
                 <p>{descriptionText}</p>
             </div>
         </div>

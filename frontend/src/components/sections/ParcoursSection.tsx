@@ -101,7 +101,7 @@ function BiographyTab({ biography, bio }: { biography: Biography | null; bio: { 
 
 function SkillsTab({ skills }: { skills: Skill[] }) {
   const order = ["cms", "frontend", "backend", "tools", "design"];
-  
+
   const categories = [...new Set(skills.map(s => s.category))].sort(
     (a, b) => order.indexOf(a) - order.indexOf(b)
   );
