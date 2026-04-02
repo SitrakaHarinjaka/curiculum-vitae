@@ -20,7 +20,7 @@ export function AboutMeSection({ about }: { about: string }) {
 
         <div className="relative ">
             <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 items-center text-left lg:text-justify">
-                <p>{descriptionText}</p>
+                <p className="text-text-primary text-sm lg:text-md leading-relaxed">{descriptionText}</p>
             </div>
         </div>
       </div>
