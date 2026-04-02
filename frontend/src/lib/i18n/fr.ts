@@ -5,6 +5,10 @@ export const fr = {
     moreInfo: "Plus d'infos",
     defaultTitle: 'Développeur Front-End',
   },
+  about:{
+    title: 'A propos',
+    titleAccent: 'de moi'
+  },
   services: {
     title: 'Mes',
     titleAccent: 'services',

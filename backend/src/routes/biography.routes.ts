@@ -32,11 +32,12 @@ router.get('/', getBiography);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [fullName, title, aboutText]
+ *             required: [fullName, title, aboutText, aboutLongText]
  *             properties:
  *               fullName: { type: string }
  *               title: { type: string }
  *               aboutText: { type: string }
+ *               aboutLongText: { type: string }
  *               profileImage: { type: string }
  *               phone: { type: string }
  *               email: { type: string }

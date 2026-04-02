@@ -11,6 +11,7 @@ export interface Biography {
   title: string;
   subtitle: string | null;
   aboutText: string;
+  aboutLongText: string;
   profileImage: string | null;
   phone: string | null;
   email: string | null;

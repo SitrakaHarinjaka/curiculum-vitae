@@ -71,6 +71,17 @@ export function BiographyPage() {
           />
         </div>
 
+        <div>
+          <label className="block text-sm themed-label mb-1">À propos de moi ( longue desciption )</label>
+          <textarea
+            value={form.aboutLongText || ''}
+            onChange={e => updateField('aboutLongText', e.target.value)}
+            rows={5}
+            required
+            className="w-full px-4 py-2.5 themed-input rounded-lg focus:outline-none resize-none"
+          />
+        </div>
+
         <div className="flex items-center gap-3">
           <button
             type="submit"

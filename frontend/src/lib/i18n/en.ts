@@ -7,6 +7,10 @@ export const en: Dictionary = {
     moreInfo: 'More info',
     defaultTitle: 'Front-End Developer',
   },
+  about:{
+    title: 'About',
+    titleAccent: 'me'
+  },
   services: {
     title: 'My',
     titleAccent: 'services',

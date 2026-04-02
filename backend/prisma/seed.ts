@@ -35,6 +35,7 @@ async function main() {
       title: 'Développeur Front-End',
       subtitle: 'Bienvenue dans mon Curriculum Vitae',
       aboutText: "Développeur front-end avec plus de huit ans d'expérience, spécialisé en React, Vue et intégration HTML/CSS. Je crée des interfaces modernes et performantes, et maîtrise les API REST et GraphQL. Mon parcours reflète rigueur, expertise et professionnalisme.",
+      aboutLongText: "Je suis développeur frontend CMS et fullstack JavaScript spécialisé en ",
       phone: '+1 504-899-822-457',
       email: 'info@bluebase3.com',
       address: '22 Baker Street Hangover, Stains W1U 3BW',

@@ -15,6 +15,7 @@ const FIELD_LABELS: Record<string, string> = {
   title: 'Titre',
   subtitle: 'Sous-titre',
   aboutText: 'À propos',
+  aboutLongText:'A propos de moi',  
   nationality: 'Nationalité',
   languages: 'Langues',
   freelance: 'Freelance',

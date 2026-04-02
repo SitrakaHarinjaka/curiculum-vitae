@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
 
 const TRANSLATABLE_FIELDS: Record<string, string[]> = {
-  biography: ['title', 'subtitle', 'aboutText', 'nationality', 'languages', 'freelance'],
+  biography: ['title', 'subtitle', 'aboutText', 'aboutLongText','nationality', 'languages', 'freelance'],
   skill: ['name', 'category'],
   education: ['degree', 'field', 'description'],
   experience: ['role', 'description'],

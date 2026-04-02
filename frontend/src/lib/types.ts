@@ -4,6 +4,7 @@ export interface Biography {
   title: string;
   subtitle: string | null;
   aboutText: string;
+  aboutLongText: string;
   profileImage: string | null;
   phone: string | null;
   email: string | null;
@@ -13,6 +14,11 @@ export interface Biography {
   languages: string | null;
   freelance: string | null;
   cvUrl: string | null;
+}
+
+export interface AboutMe {
+  id: number;
+  description: string;
 }
 
 export interface Skill {

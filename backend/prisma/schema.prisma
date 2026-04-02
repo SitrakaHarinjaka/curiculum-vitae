@@ -22,22 +22,23 @@ model User {
 }
 
 model Biography {
-  id           Int       @id @default(autoincrement())
-  fullName     String    @map("full_name")
-  title        String
-  subtitle     String?
-  aboutText    String    @map("about_text") @db.Text
-  profileImage String?   @map("profile_image")
-  phone        String?
-  email        String?
-  address      String?
-  birthday     DateTime?
-  nationality  String?
-  languages    String?
-  freelance    String?   @default("Available")
-  cvUrl        String?   @map("cv_url")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
+  id             Int       @id @default(autoincrement())
+  fullName       String    @map("full_name")
+  title          String
+  subtitle       String?
+  aboutText      String    @map("about_text") @db.Text
+  aboutLongText  String?   @map("about_long_text")
+  profileImage   String?   @map("profile_image")
+  phone          String?
+  email          String?
+  address        String?
+  birthday       DateTime?
+  nationality    String?
+  languages      String?
+  freelance      String?   @default("Available")
+  cvUrl          String?   @map("cv_url")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
 
   @@map("biography")
 }

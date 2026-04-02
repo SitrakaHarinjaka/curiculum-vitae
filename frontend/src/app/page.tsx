@@ -9,6 +9,7 @@ import { ServicesSection } from '@/components/sections/ServicesSection';
 import { ParcoursSection } from '@/components/sections/ParcoursSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { AboutMeSection } from '@/components/sections/AboutMeSection';
 
 async function getLocale(): Promise<Locale> {
   const cookieStore = await cookies();
@@ -39,6 +40,7 @@ export default async function Home() {
       <Header />
       <main>
         <HeroSection biography={biography} socialLinks={socialLinks || []} />
+        <AboutMeSection about={biography?.aboutLongText || ''} />
         <ServicesSection services={services || []} />
         <ParcoursSection
           biography={biography}
