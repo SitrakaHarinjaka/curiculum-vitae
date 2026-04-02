@@ -9,7 +9,7 @@ export function AboutMeSection({ about }: { about: string }) {
   const descriptionText = (about || '');
 
   return (
-    <section id="home" className="relative flex items-center py-20 bg-[linear-gradient(135deg,#052050_0%,#240839_100%)]">
+    <section id="about" className="relative flex items-center py-20 bg-[linear-gradient(135deg,#052050_0%,#240839_100%)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">

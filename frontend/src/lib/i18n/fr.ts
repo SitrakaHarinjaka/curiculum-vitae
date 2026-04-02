@@ -63,6 +63,7 @@ export const fr = {
   nav: {
     home: 'HOME',
     about: 'ABOUT',
+    service: 'SERVICE',
     resume: 'RESUME',
     contact: 'CONTACT',
   },

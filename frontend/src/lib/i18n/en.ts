@@ -65,6 +65,7 @@ export const en: Dictionary = {
   nav: {
     home: 'HOME',
     about: 'ABOUT',
+    service: 'SERVICE',
     resume: 'RESUME',
     contact: 'CONTACT',
   },

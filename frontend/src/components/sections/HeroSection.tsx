@@ -50,9 +50,9 @@ export function HeroSection({ biography, socialLinks }: HeroSectionProps) {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 mb-8">
+            <div className="flex flex-wrap items-center gap-4 mb-8">             
               <a
-                target="_blank"
+                key="#about"
                 href="#about"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-accent text-accent rounded-full hover:bg-accent hover:text-bg-primary transition-all duration-300"
               >
