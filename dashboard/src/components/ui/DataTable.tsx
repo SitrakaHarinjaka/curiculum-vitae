@@ -42,16 +42,17 @@ export function DataTable<T>({ columns, data, loading, keyExtractor }: DataTable
               </td>
             </tr>
           ) : (
-            data.map(item => (
-              <tr key={keyExtractor(item)} className="transition-colors hover:opacity-80" style={{ borderBottom: '1px solid var(--border-light)' }}>
+            data.map(item => {
+              return (<tr key={keyExtractor(item)} className="transition-colors hover:opacity-80" style={{ borderBottom: '1px solid var(--border-light)' }}>
                 {columns.map(col => (
                   <td key={col.key} className="px-4 py-3 text-sm" style={{ color: 'var(--text-primary)' }}>
                     {col.render ? col.render(item) : String((item as Record<string, unknown>)[col.key] ?? '')}
                   </td>
                 ))}
-              </tr>
-            ))
-          )}
+              </tr>)
+            }
+          ))
+        }
         </tbody>
       </table>
     </div>

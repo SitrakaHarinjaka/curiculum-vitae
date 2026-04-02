@@ -10,6 +10,8 @@ export async function trackVisitor(req: Request, res: Response) {
 
   try {
     const geo = await getGeolocation(ip);
+    const ua = userAgent || req.headers['user-agent'] || '';
+    const isBot = /bot|crawl|spider|slurp|curl|wget|python|node/i.test(ua);
     const visitor = await prisma.visitor.create({
       data: {
         ip,
@@ -20,6 +22,7 @@ export async function trackVisitor(req: Request, res: Response) {
         referrer: referrer || null,
         userAgent: userAgent || req.headers['user-agent'] || null,
         pageVisited: page || '/',
+        isBot
       },
     });
     const suggestedLocale = getLocaleFromCountry(geo?.countryCode);

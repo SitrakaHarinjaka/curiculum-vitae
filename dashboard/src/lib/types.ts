@@ -81,6 +81,7 @@ export interface Visitor {
   referrer: string | null;
   userAgent: string | null;
   pageVisited: string | null;
+  isBot: boolean | null;
   timeSpent: number | null;
   createdAt: string;
 }

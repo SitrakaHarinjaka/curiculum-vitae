@@ -5,18 +5,7 @@ import { DataTable } from '../components/ui/DataTable';
 import { Pagination } from '../components/ui/Pagination';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { Trash2, Clock } from 'lucide-react';
-
-function formatTimeSpent(seconds: number | null): string {
-  if (!seconds) return '-';
-  if (seconds < 60) return `${seconds}s`;
-  const min = Math.floor(seconds / 60);
-  const sec = seconds % 60;
-  if (min < 60) return `${min}m ${sec}s`;
-  const hrs = Math.floor(min / 60);
-  const remainMin = min % 60;
-  return `${hrs}h ${remainMin}m`;
-}
+import { Trash2, Clock, Check } from 'lucide-react';
 
 export function Visitors() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
@@ -28,7 +17,8 @@ export function Visitors() {
     setLoading(true);
     api.get(`/admin/visitors?page=${p}&limit=20`)
       .then(res => {
-        setVisitors(res.data.data);
+        const filtered = res.data.data.filter((v: Visitor) => !v.isBot);
+        setVisitors(filtered);
         setTotalPages(res.data.meta?.totalPages || 1);
       })
       .catch(console.error)
@@ -36,7 +26,7 @@ export function Visitors() {
   };
 
   useEffect(() => { fetchVisitors(page); }, [page]);
-
+  useEffect(()=> {console.log('visitors => ', visitors)}, [visitors]);
   const deleteVisitor = async (id: number) => {
     if (!confirm('Supprimer ce visiteur ?')) return;
     await api.delete(`/admin/visitors/${id}`);
@@ -54,16 +44,6 @@ export function Visitors() {
       </span>
     )},
     { key: 'pageVisited', header: 'Page', render: (v: Visitor) => v.pageVisited || '/' },
-    {
-      key: 'timeSpent',
-      header: 'Temps passé',
-      render: (v: Visitor) => (
-        <span className="flex items-center gap-1">
-          <Clock size={12} className="opacity-50" />
-          {formatTimeSpent(v.timeSpent)}
-        </span>
-      ),
-    },
     {
       key: 'createdAt',
       header: 'Date & Heure',

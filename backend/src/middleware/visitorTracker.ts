@@ -17,6 +17,8 @@ async function trackVisit(req: Request) {
   const pageVisited = req.originalUrl;
 
   const geo = await getGeolocation(ip);
+  const ua = userAgent || req.headers['user-agent'] || '';
+  const isBot = /bot|crawl|spider|slurp|curl|wget|python|node/i.test(ua);
 
   await prisma.visitor.create({
     data: {
@@ -28,6 +30,7 @@ async function trackVisit(req: Request) {
       referrer,
       userAgent,
       pageVisited,
+      isBot
     },
   });
 }

@@ -121,6 +121,7 @@ model Visitor {
   pageVisited String?  @map("page_visited")
   timeSpent   Int?     @map("time_spent")
   createdAt   DateTime @default(now()) @map("created_at")
+  isBot       Boolean?  @default(false)
 
   @@index([createdAt])
   @@index([ip])
