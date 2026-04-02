@@ -38,7 +38,8 @@ export function ServicesSection({ services }: ServicesSectionProps) {
         </div>
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {(services.length > 0 ? services : defaultServices).map((service, index) => {
+          {(services.length > 0 ? [...services].reverse() : [...defaultServices].reverse())
+          .map((service, index) => {
             const Icon = iconMap[service.icon] || Code;
             return (
               <div
